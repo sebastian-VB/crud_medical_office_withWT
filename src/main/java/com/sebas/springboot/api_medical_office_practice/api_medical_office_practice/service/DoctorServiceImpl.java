@@ -25,8 +25,7 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Override
     public Optional<Doctor> findById(Long id) {
-        //TODO: luego se implementa
-        return null;
+        return doctorRepository.findById(id);
     }
 
     @Transactional
