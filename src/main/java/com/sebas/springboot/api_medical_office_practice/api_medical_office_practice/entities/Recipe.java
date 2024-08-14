@@ -28,11 +28,11 @@ public class Recipe {
     private String diagnosis;
 
     @ManyToOne
-    @Column(name = "doctor_id")
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     @ManyToOne
-    @Column(name = "patient_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToMany
@@ -43,6 +43,14 @@ public class Recipe {
         uniqueConstraints = {@UniqueConstraint(columnNames = {"recipe_id", "medicine_id"})}
     )
     private List<Medicine> medicines;
+
+    public Recipe() {
+    }
+
+    public Recipe(Date dateReason, String diagnosis) {
+        this.dateReason = dateReason;
+        this.diagnosis = diagnosis;
+    }
 
     public Long getId() {
         return id;
@@ -82,6 +90,14 @@ public class Recipe {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public List<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines = medicines;
     }
     
 }
