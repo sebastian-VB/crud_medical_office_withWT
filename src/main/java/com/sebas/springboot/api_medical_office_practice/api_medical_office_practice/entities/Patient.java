@@ -1,10 +1,11 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -18,8 +19,8 @@ public class Patient {
 
     private Integer order_attention;
 
-    @OneToOne
-    @JoinColumn(name = "person_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "person_id")
     private Person person;
 
     public Long getId() {
