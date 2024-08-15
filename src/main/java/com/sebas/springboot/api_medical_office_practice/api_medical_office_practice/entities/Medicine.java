@@ -27,6 +27,14 @@ public class Medicine {
     @ManyToMany(mappedBy = "medicines")
     private List<Recipe> recipes;
 
+    public Medicine() {
+    }
+
+    public Medicine(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

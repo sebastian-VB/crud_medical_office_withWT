@@ -43,6 +43,14 @@ public class Recipe {
     )
     private List<Medicine> medicines;
 
+    public Recipe() {
+    }
+
+    public Recipe(Date dateReason, String diagnosis) {
+        this.dateReason = dateReason;
+        this.diagnosis = diagnosis;
+    }
+
     public Long getId() {
         return id;
     }
@@ -81,6 +89,14 @@ public class Recipe {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public List<Medicine> getMedicines() {
+        return medicines;
+    }
+
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines = medicines;
     }
     
 }
