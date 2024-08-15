@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +44,18 @@ public class DoctorController {
     @PostMapping
     public Doctor saveDoctor(@RequestBody Doctor doctor){
         return doctorService.save(doctor);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctor){
+
+        Optional<Doctor> optionalDoctor = doctorService.update(id, doctor);
+
+        if(optionalDoctor.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalDoctor.orElseThrow());
+        }
+
+        return ResponseEntity.badRequest().build();
+
     }
 }

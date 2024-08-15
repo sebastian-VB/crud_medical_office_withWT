@@ -13,5 +13,6 @@ public interface DoctorService {
 
     Doctor save(Doctor doctor);
 
-    //TODO: POR EL MOMENTO ESOS 3 METODOS
+    Optional<Doctor> update(Long id, Doctor doctor);
+
 }

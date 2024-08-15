@@ -45,4 +45,29 @@ public class DoctorServiceImpl implements DoctorService{
         return doctorRepository.save(doctor);
     }
 
+    @Override
+    public Optional<Doctor> update(Long id, Doctor doctor) {
+        
+        Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
+
+        if(optionalDoctor.isPresent()){
+
+            Doctor updateDoctor = optionalDoctor.orElseThrow();
+
+            Person updatePerson = new Person();
+            updatePerson.setName(doctor.getPerson().getName());
+            updatePerson.setLastname(doctor.getPerson().getLastname());
+            updatePerson.setDni(doctor.getPerson().getDni());
+            updatePerson.setPhone(doctor.getPerson().getPhone());
+
+            updateDoctor.setPerson(updatePerson);
+            updateDoctor.setSpeciality(doctor.getSpeciality());
+            
+            return Optional.of(doctorRepository.save(updateDoctor));
+        }
+
+        return optionalDoctor;
+
+    }
+
 }
