@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Patient;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Person;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.PatientRepository;
+
 
 @Service
 public class PatientServiceImpl implements PatientService{
@@ -26,6 +28,7 @@ public class PatientServiceImpl implements PatientService{
         return patientRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public Patient save(Patient patient) {
         
