@@ -1,6 +1,10 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories;
 
-public interface RecipeRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Recipe;
+
+public interface RecipeRepository extends JpaRepository<Recipe, Long>{
 
     /*
      * METODO PRA GUARDAR
