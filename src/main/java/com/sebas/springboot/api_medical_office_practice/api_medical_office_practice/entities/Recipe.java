@@ -1,6 +1,6 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +25,7 @@ public class Recipe {
     private Long id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date dateReason;
+    private LocalDateTime dateReason;
 
     private String diagnosis;
 
@@ -49,7 +49,7 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(Date dateReason, String diagnosis) {
+    public Recipe(LocalDateTime dateReason, String diagnosis) {
         this.dateReason = dateReason;
         this.diagnosis = diagnosis;
     }
@@ -62,11 +62,11 @@ public class Recipe {
         this.id = id;
     }
 
-    public Date getDateReason() {
+    public LocalDateTime getDateReason() {
         return dateReason;
     }
 
-    public void setDateReason(Date dateReason) {
+    public void setDateReason(LocalDateTime dateReason) {
         this.dateReason = dateReason;
     }
 
