@@ -10,7 +10,12 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long>{
      * METODO PRA GUARDAR
      * METODO PARA LISTAR
      * --METODO PARA OBTENER UN MEDICAMENTO POR NOMBRE(USANDO QUERY)
+     * --METODO PARA CONSULTAR POR CODIGO SI EXISTE ESA MEDICINA
      * METODO PARA ACTUALIZAR
      * METODO PARA ELIMINAR
      */
+
+    Medicine findByCode(String code);
+
+    boolean existsByCode(String code);
 }
