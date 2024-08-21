@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Recipe;
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.tdo.RecipeTDO;
 
 public interface RecipeService {
 
@@ -11,7 +12,7 @@ public interface RecipeService {
 
     Optional<Recipe> findById(Long id);
 
-    Recipe save(Recipe recipe);
+    Optional<Recipe> save(RecipeTDO recipe);
 
     Optional<Recipe> update(Recipe recipe, Long id);
 }
