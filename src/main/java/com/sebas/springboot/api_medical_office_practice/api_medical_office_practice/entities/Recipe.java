@@ -1,7 +1,7 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,7 +44,7 @@ public class Recipe {
         inverseJoinColumns = @JoinColumn(name="medicine_id"),
         uniqueConstraints = {@UniqueConstraint(columnNames = {"recipe_id", "medicine_id"})}
     )
-    private List<Medicine> medicines;
+    private Set<Medicine> medicines;
 
     public Recipe() {
     }
@@ -94,11 +94,11 @@ public class Recipe {
         this.patient = patient;
     }
 
-    public List<Medicine> getMedicines() {
+    public Set<Medicine> getMedicines() {
         return medicines;
     }
 
-    public void setMedicines(List<Medicine> medicines) {
+    public void setMedicines(Set<Medicine> medicines) {
         this.medicines = medicines;
     }
     
