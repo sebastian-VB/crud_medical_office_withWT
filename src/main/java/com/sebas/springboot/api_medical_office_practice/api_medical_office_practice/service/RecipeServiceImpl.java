@@ -47,31 +47,10 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Optional<Recipe> save(RecipeTDO recipeTdo) {
         
-        Optional<Doctor> optionalDoctor = doctorRepository.findById(recipeTdo.getDoctor_id());
-        Optional<Patient> optionalPatinent = patientRepository.findById(recipeTdo.getPatient_id());
-        
-        if(optionalDoctor.isPresent() && optionalPatinent.isPresent()){
-            Recipe recipe = new Recipe();
-            Set<Medicine> medicinesAux = new HashSet<>();
-            
-            recipe.setDoctor(optionalDoctor.orElseThrow());
-            recipe.setPatient(optionalPatinent.orElseThrow());
-            recipe.setDiagnosis(recipeTdo.getDiagnosis());
-            recipe.setDateReason(LocalDateTime.now());
+        Recipe recipe = new Recipe();
 
-            for(Medicine med: recipeTdo.getMedicines() ){
-                if(!medicineRepository.existsByCode(med.getCode())){
-                    medicineRepository.save(med);
-                }
-                medicinesAux.add(medicineRepository.findByCode(med.getCode()));
-            }
-            
-            recipe.setMedicines(medicinesAux);
+        return saveOrUpdateRecipe(recipe, recipeTdo);
 
-            return Optional.of(recipeRepository.save(recipe));
-            // return Optional.empty();
-        }
-        return Optional.empty();
     }
 
     @Override
@@ -81,33 +60,40 @@ public class RecipeServiceImpl implements RecipeService{
 
         if(optionalRecipe.isPresent()){
 
-            Optional<Doctor> optionalDoctor = doctorRepository.findById(recipeTdo.getDoctor_id());
-            Optional<Patient> optionalPatinent = patientRepository.findById(recipeTdo.getPatient_id());
+            Recipe recipe = optionalRecipe.orElseThrow();
 
-            if(optionalDoctor.isPresent() && optionalPatinent.isPresent()){
-                Recipe recipe = optionalRecipe.orElseThrow();
-                Set<Medicine> medicinesAux = new HashSet<>();
+            return saveOrUpdateRecipe(recipe, recipeTdo);
 
-                recipe.setDoctor(optionalDoctor.orElseThrow());
-                recipe.setPatient(optionalPatinent.orElseThrow());
-                recipe.setDiagnosis(recipeTdo.getDiagnosis());
-
-                for(Medicine med: recipeTdo.getMedicines() ){
-                    if(!medicineRepository.existsByCode(med.getCode())){
-                        medicineRepository.save(med);
-                    }
-                    medicinesAux.add(medicineRepository.findByCode(med.getCode()));
-                }
-                
-                recipe.setMedicines(medicinesAux);
-    
-                return Optional.of(recipeRepository.save(recipe));
-            }
-
-            return Optional.empty();
         }
 
         return optionalRecipe;
+    }
+
+    public Optional<Recipe> saveOrUpdateRecipe(Recipe recipeEntity, RecipeTDO recipeTdo){
+
+        Optional<Doctor> optionalDoctor = doctorRepository.findById(recipeTdo.getDoctor_id());
+        Optional<Patient> optionalPatinent = patientRepository.findById(recipeTdo.getPatient_id());
+        
+        if(optionalDoctor.isPresent() && optionalPatinent.isPresent()){
+            Set<Medicine> medicinesAux = new HashSet<>();
+            
+            recipeEntity.setDoctor(optionalDoctor.orElseThrow());
+            recipeEntity.setPatient(optionalPatinent.orElseThrow());
+            recipeEntity.setDiagnosis(recipeTdo.getDiagnosis());
+            recipeEntity.setDateReason(LocalDateTime.now());
+
+            for(Medicine med: recipeTdo.getMedicines() ){
+                if(!medicineRepository.existsByCode(med.getCode())){
+                    medicineRepository.save(med);
+                }
+                medicinesAux.add(medicineRepository.findByCode(med.getCode()));
+            }
+            
+            recipeEntity.setMedicines(medicinesAux);
+
+            return Optional.of(recipeRepository.save(recipeEntity));
+        }
+        return Optional.empty();
     }
 
 }
