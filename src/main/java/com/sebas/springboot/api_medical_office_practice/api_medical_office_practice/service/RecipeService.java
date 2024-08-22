@@ -14,5 +14,5 @@ public interface RecipeService {
 
     Optional<Recipe> save(RecipeTDO recipe);
 
-    Optional<Recipe> update(Recipe recipe, Long id);
+    Optional<Recipe> update(RecipeTDO recipe, Long id);
 }
