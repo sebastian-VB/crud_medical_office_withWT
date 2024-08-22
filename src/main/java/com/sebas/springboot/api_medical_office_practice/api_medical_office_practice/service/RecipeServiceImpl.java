@@ -56,6 +56,7 @@ public class RecipeServiceImpl implements RecipeService{
             
             recipe.setDoctor(optionalDoctor.orElseThrow());
             recipe.setPatient(optionalPatinent.orElseThrow());
+            recipe.setDiagnosis(recipeTdo.getDiagnosis());
             recipe.setDateReason(LocalDateTime.now());
 
             for(Medicine med: recipeTdo.getMedicines() ){
@@ -74,7 +75,7 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Optional<Recipe> update(Recipe recipe, Long id) {
+    public Optional<Recipe> update(RecipeTDO recipe, Long id) {
         return Optional.empty();
     }
 
