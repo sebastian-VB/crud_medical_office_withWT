@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Doctor;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Person;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.DoctorRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class DoctorServiceImpl implements DoctorService{
@@ -45,6 +45,7 @@ public class DoctorServiceImpl implements DoctorService{
         return doctorRepository.save(doctor);
     }
 
+    @Transactional
     @Override
     public Optional<Doctor> update(Long id, Doctor doctor) {
         

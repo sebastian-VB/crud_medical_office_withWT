@@ -1,7 +1,9 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
-import java.sql.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +24,8 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date dateReason;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime dateReason;
 
     private String diagnosis;
 
@@ -41,12 +44,12 @@ public class Recipe {
         inverseJoinColumns = @JoinColumn(name="medicine_id"),
         uniqueConstraints = {@UniqueConstraint(columnNames = {"recipe_id", "medicine_id"})}
     )
-    private List<Medicine> medicines;
+    private Set<Medicine> medicines;
 
     public Recipe() {
     }
 
-    public Recipe(Date dateReason, String diagnosis) {
+    public Recipe(LocalDateTime dateReason, String diagnosis) {
         this.dateReason = dateReason;
         this.diagnosis = diagnosis;
     }
@@ -59,11 +62,11 @@ public class Recipe {
         this.id = id;
     }
 
-    public Date getDateReason() {
+    public LocalDateTime getDateReason() {
         return dateReason;
     }
 
-    public void setDateReason(Date dateReason) {
+    public void setDateReason(LocalDateTime dateReason) {
         this.dateReason = dateReason;
     }
 
@@ -91,11 +94,11 @@ public class Recipe {
         this.patient = patient;
     }
 
-    public List<Medicine> getMedicines() {
+    public Set<Medicine> getMedicines() {
         return medicines;
     }
 
-    public void setMedicines(List<Medicine> medicines) {
+    public void setMedicines(Set<Medicine> medicines) {
         this.medicines = medicines;
     }
     
