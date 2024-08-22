@@ -75,8 +75,39 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Optional<Recipe> update(RecipeTDO recipe, Long id) {
-        return Optional.empty();
+    public Optional<Recipe> update(RecipeTDO recipeTdo, Long id) {
+
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
+
+        if(optionalRecipe.isPresent()){
+
+            Optional<Doctor> optionalDoctor = doctorRepository.findById(recipeTdo.getDoctor_id());
+            Optional<Patient> optionalPatinent = patientRepository.findById(recipeTdo.getPatient_id());
+
+            if(optionalDoctor.isPresent() && optionalPatinent.isPresent()){
+                Recipe recipe = optionalRecipe.orElseThrow();
+                Set<Medicine> medicinesAux = new HashSet<>();
+
+                recipe.setDoctor(optionalDoctor.orElseThrow());
+                recipe.setPatient(optionalPatinent.orElseThrow());
+                recipe.setDiagnosis(recipeTdo.getDiagnosis());
+
+                for(Medicine med: recipeTdo.getMedicines() ){
+                    if(!medicineRepository.existsByCode(med.getCode())){
+                        medicineRepository.save(med);
+                    }
+                    medicinesAux.add(medicineRepository.findByCode(med.getCode()));
+                }
+                
+                recipe.setMedicines(medicinesAux);
+    
+                return Optional.of(recipeRepository.save(recipe));
+            }
+
+            return Optional.empty();
+        }
+
+        return optionalRecipe;
     }
 
 }
