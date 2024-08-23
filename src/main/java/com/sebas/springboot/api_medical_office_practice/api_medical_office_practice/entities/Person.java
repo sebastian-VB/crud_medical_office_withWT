@@ -1,10 +1,13 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "person")
@@ -14,12 +17,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String lastname;
 
+    @Size(max = 8)
+    @Column(unique = true)
+    @NotBlank
     private String dni;
 
+    @Size(min = 6, max = 10)
+    @NotBlank
     private String phone;
 
     public Person(){}
