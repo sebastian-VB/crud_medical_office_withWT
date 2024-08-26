@@ -1,5 +1,7 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.validation.ExistsByDni;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Person {
     @NotBlank
     private String lastname;
 
+    @ExistsByDni
     @Size(max = 8)
     @Column(unique = true)
     @NotBlank
