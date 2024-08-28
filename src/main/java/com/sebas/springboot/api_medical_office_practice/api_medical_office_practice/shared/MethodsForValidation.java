@@ -14,7 +14,7 @@ public class MethodsForValidation {
         Map<String, String> errors = new HashMap<>();
 
         result.getFieldErrors().forEach(err -> {
-            errors.put(err.getField(), err.getDefaultMessage());
+            errors.put("message", err.getDefaultMessage());
         });
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
