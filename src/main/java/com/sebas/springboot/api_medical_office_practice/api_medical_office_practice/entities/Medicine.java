@@ -22,7 +22,7 @@ public class Medicine {
 
     private String code;
 
-    @NotBlank(message = "{NotBlak.medicine.name}")
+    @NotBlank(message = "{NotBlank.medicine.name}")
     private String name;
 
     @JsonIgnoreProperties({"medicines", "handler", "hibernateLazyInitializer"})

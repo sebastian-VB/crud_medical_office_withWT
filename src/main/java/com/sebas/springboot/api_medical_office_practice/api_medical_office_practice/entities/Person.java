@@ -18,20 +18,20 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "{NotBlak.person.name}")
+    @NotBlank(message = "{NotBlank.person.name}")
     private String name;
 
-    @NotBlank(message = "{NotBlak.person.lastname}")
+    @NotBlank(message = "{NotBlank.person.lastname}")
     private String lastname;
 
     // @ExistsByDni
     @Size(min = 6, max = 8, message = "{Size.person.dni}")
     @Column(unique = true)
-    @NotBlank(message = "{NotBlak.person.dni}")
+    @NotBlank(message = "{NotBlank.person.dni}")
     private String dni;
 
     @Size(min = 6, max = 10, message = "{Size.person.phone}")
-    @NotBlank(message = "{NotBlak.person.phone}")
+    @NotBlank(message = "{NotBlank.person.phone}")
     private String phone;
 
     public Person(){}

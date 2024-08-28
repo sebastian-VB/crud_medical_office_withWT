@@ -19,7 +19,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "{NotBlak.patient.order_attention}")
+    @NotBlank(message = "{NotBlank.patient.order_attention}")
     private Integer order_attention;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
