@@ -19,7 +19,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "{NotBlak.doctor.speciality}")
     private String speciality;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,6 +1,5 @@
 package com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities;
 
-import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.validation.ExistsByDni;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,20 +18,20 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "{NotBlak.person.name}")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "{NotBlak.person.lastname}")
     private String lastname;
 
-    @ExistsByDni
-    @Size(max = 8)
+    // @ExistsByDni
+    @Size(min = 6, max = 8, message = "{Size.person.dni}")
     @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "{NotBlak.person.dni}")
     private String dni;
 
-    @Size(min = 6, max = 10)
-    @NotBlank
+    @Size(min = 6, max = 10, message = "{Size.person.phone}")
+    @NotBlank(message = "{NotBlak.person.phone}")
     private String phone;
 
     public Person(){}

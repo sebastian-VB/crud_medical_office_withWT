@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "medicine")
@@ -21,6 +22,7 @@ public class Medicine {
 
     private String code;
 
+    @NotBlank(message = "{NotBlak.medicine.name}")
     private String name;
 
     @JsonIgnoreProperties({"medicines", "handler", "hibernateLazyInitializer"})
