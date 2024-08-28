@@ -52,7 +52,6 @@ public class DoctorServiceImpl implements DoctorService{
         Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
 
         if(optionalDoctor.isPresent()){
-
             Doctor updateDoctor = optionalDoctor.orElseThrow();
 
             Person updatePerson = new Person();

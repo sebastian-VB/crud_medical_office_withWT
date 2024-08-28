@@ -56,7 +56,11 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctor){
+    public ResponseEntity<?> updateDoctor(@Valid @RequestBody Doctor doctor, BindingResult result, @PathVariable Long id){
+
+        if(result.hasErrors()){
+            return MethodsForValidation.validation(result);
+        }
 
         Optional<Doctor> optionalDoctor = doctorService.update(id, doctor);
 
