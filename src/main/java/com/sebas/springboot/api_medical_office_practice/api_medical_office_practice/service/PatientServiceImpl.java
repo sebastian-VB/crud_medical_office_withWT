@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Patient;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Person;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.PatientRepository;
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.PersonRepository;
+
+import jakarta.validation.ValidationException;
 
 
 @Service
@@ -17,6 +20,9 @@ public class PatientServiceImpl implements PatientService{
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public List<Patient> findAll() {
@@ -31,6 +37,10 @@ public class PatientServiceImpl implements PatientService{
     @Transactional
     @Override
     public Patient save(Patient patient) {
+
+        if(personRepository.existsByDni(patient.getPerson().getDni())){
+            throw new ValidationException("Dni ya existe");
+        }
         
         Person person = new Person(
             patient.getPerson().getName(), 
@@ -52,6 +62,10 @@ public class PatientServiceImpl implements PatientService{
         if(optionalPatient.isPresent()){
 
             Patient patientDB = optionalPatient.orElseThrow();
+
+            if(personRepository.existsByDni(patient.getPerson().getDni())){
+                throw new ValidationException("Dni pertenece a otra persona");
+            }
 
             patientDB.getPerson().setName(patient.getPerson().getName());
             patientDB.getPerson().setLastname(patient.getPerson().getLastname());

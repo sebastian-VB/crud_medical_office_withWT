@@ -29,6 +29,9 @@ public class MedicineServiceImpl implements MedicineService{
     @Transactional
     @Override
     public Medicine save(Medicine medicine) {
+
+        medicine.setCode(createCode(medicine.getName(), "sa"));
+
         return medicineRepository.save(medicine);
     }
 
@@ -40,13 +43,22 @@ public class MedicineServiceImpl implements MedicineService{
 
         if(optionalMedicine.isPresent()){
             Medicine medicineDb = optionalMedicine.orElseThrow();
-            medicineDb.setCode(medicine.getCode());
             medicineDb.setName(medicine.getName());
+            medicineDb.setCode(createCode(medicine.getName(), "up"));
 
             medicineRepository.save(medicineDb);
         }
 
         return optionalMedicine;
+    }
+
+    private String createCode (String nameMedicine, String svup){
+
+        int numberSeq = medicineRepository.findAll().size();
+        if(svup != "up") numberSeq += 1;
+        String code = nameMedicine.substring(0, 3) + numberSeq;
+
+        return code;
     }
 
 }
