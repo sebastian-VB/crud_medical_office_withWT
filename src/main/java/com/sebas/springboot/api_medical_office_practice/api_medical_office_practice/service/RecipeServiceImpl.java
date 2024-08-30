@@ -19,6 +19,8 @@ import com.sebas.springboot.api_medical_office_practice.api_medical_office_pract
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.RecipeRepository;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.tdo.RecipeTDO;
 
+import jakarta.validation.ValidationException;
+
 @Service
 public class RecipeServiceImpl implements RecipeService{
 
@@ -49,6 +51,9 @@ public class RecipeServiceImpl implements RecipeService{
         
         Recipe recipe = new Recipe();
 
+        if(recipeTdo.getDiagnosis().isEmpty()) throw new ValidationException("Diagnóstico no debe ser vacío");
+        if(recipeTdo.getMedicines().isEmpty()) throw new ValidationException("Lista de medicamentos no deben de estar vacía");
+
         return saveOrUpdateRecipe(recipe, recipeTdo);
 
     }
@@ -61,6 +66,9 @@ public class RecipeServiceImpl implements RecipeService{
         if(optionalRecipe.isPresent()){
 
             Recipe recipe = optionalRecipe.orElseThrow();
+
+            if(recipeTdo.getDiagnosis().isEmpty()) throw new ValidationException("Diagnóstico no debe ser vacío");
+            if(recipeTdo.getMedicines().isEmpty()) throw new ValidationException("Lista de medicamentos no deben de estar vacía");
 
             return saveOrUpdateRecipe(recipe, recipeTdo);
 
