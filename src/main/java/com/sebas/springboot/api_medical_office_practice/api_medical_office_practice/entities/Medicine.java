@@ -3,6 +3,7 @@ package com.sebas.springboot.api_medical_office_practice.api_medical_office_prac
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String code;
 
     @NotBlank(message = "{NotBlank.medicine.name}")
