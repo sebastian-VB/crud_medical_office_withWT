@@ -19,4 +19,12 @@ public class MethodsForValidation {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    public static ResponseEntity<?> validationInService(String message){
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+
+    }
 }
