@@ -63,8 +63,8 @@ public class PatientServiceImpl implements PatientService{
 
             Patient patientDB = optionalPatient.orElseThrow();
 
-            if(personRepository.existsByDni(patient.getPerson().getDni())){
-                throw new ValidationException("Dni pertenece a otra persona");
+            if(personRepository.existsByDni(patient.getPerson().getDni()) && !patientDB.getId().equals(id)){
+                throw new ValidationException("Dni ya existe");
             }
 
             patientDB.getPerson().setName(patient.getPerson().getName());

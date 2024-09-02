@@ -64,8 +64,8 @@ public class DoctorServiceImpl implements DoctorService{
         if(optionalDoctor.isPresent()){
             Doctor updateDoctor = optionalDoctor.orElseThrow();
             
-            if(personRepository.existsByDni(doctor.getPerson().getDni())){
-                throw new ValidationException("Dni pertenece a otra persona");
+            if(personRepository.existsByDni(doctor.getPerson().getDni()) && !updateDoctor.getId().equals(id)){
+                throw new ValidationException("Dni ya existe");
             }
 
             Person updatePerson = new Person();
