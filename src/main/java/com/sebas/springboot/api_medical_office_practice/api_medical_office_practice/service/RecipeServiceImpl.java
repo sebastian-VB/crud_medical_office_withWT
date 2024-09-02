@@ -101,7 +101,10 @@ public class RecipeServiceImpl implements RecipeService{
 
             return Optional.of(recipeRepository.save(recipeEntity));
         }
-        return Optional.empty();
+        else{
+            throw new ValidationException("No se encuentra la persona");
+        }
+        // return Optional.empty();
     }
 
 }
