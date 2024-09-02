@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Recipe;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.service.RecipeService;
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.shared.MethodsForValidation;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.tdo.RecipeTDO;
 
 @RestController
@@ -45,25 +46,29 @@ public class RecipeController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody RecipeTDO recipeTdo){
 
-        Optional<Recipe> optionalRecipe = recipeService.save(recipeTdo);
-
-        if(optionalRecipe.isPresent()){
+        try {
+            Optional<Recipe> optionalRecipe = recipeService.save(recipeTdo);
             return ResponseEntity.status(HttpStatus.OK).body(optionalRecipe.orElseThrow());
+            
+        } catch (Exception e) {
+            return MethodsForValidation.validationInService(e.getMessage());
         }
 
-        return ResponseEntity.notFound().build();
+        
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody RecipeTDO recipeTDO, @PathVariable Long id){
 
-        Optional<Recipe> recipeOptional= recipeService.update(recipeTDO, id);
-
-        if(recipeOptional.isPresent()){
+        try {
+            Optional<Recipe> recipeOptional= recipeService.update(recipeTDO, id);
             return ResponseEntity.status(HttpStatus.OK).body(recipeOptional.orElseThrow());
+
+        } catch (Exception e) {
+            return MethodsForValidation.validationInService(e.getMessage());
         }
 
-        return ResponseEntity.notFound().build();
+        
     }
 
 }

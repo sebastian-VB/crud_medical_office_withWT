@@ -48,27 +48,36 @@ public class DoctorController {
     @PostMapping
     public ResponseEntity<?> saveDoctor(@Valid @RequestBody Doctor doctor, BindingResult result){
         
-        if(result.hasErrors()){
-            return MethodsForValidation.validation(result);
+        try {
+            if(result.hasErrors()){
+                return MethodsForValidation.validation(result);
+            }
+    
+            return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.save(doctor));
+        } catch (Exception e) {
+            return MethodsForValidation.validationInService(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.save(doctor));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDoctor(@Valid @RequestBody Doctor doctor, BindingResult result, @PathVariable Long id){
 
-        if(result.hasErrors()){
-            return MethodsForValidation.validation(result);
+        try {
+            
+            if(result.hasErrors()){
+                return MethodsForValidation.validation(result);
+            }
+
+            Optional<Doctor> optionalDoctor = doctorService.update(id, doctor);
+            if(optionalDoctor.isPresent()){
+                return ResponseEntity.status(HttpStatus.CREATED).body(optionalDoctor.orElseThrow());
+            }
+            return ResponseEntity.badRequest().build();
+
+        } catch (Exception e) {
+            return MethodsForValidation.validationInService(e.getMessage());
         }
 
-        Optional<Doctor> optionalDoctor = doctorService.update(id, doctor);
-
-        if(optionalDoctor.isPresent()){
-            return ResponseEntity.status(HttpStatus.CREATED).body(optionalDoctor.orElseThrow());
-        }
-
-        return ResponseEntity.badRequest().build();
 
     }
 }
