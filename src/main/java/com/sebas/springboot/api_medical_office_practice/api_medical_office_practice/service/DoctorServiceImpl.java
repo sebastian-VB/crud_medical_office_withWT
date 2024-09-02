@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Doctor;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.Person;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.DoctorRepository;
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.PersonRepository;
+
+import jakarta.validation.ValidationException;
 
 
 @Service
@@ -17,6 +20,9 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public List<Doctor> findAll() {
@@ -31,6 +37,10 @@ public class DoctorServiceImpl implements DoctorService{
     @Transactional
     @Override
     public Doctor save(Doctor doctor) {
+
+        if(personRepository.existsByDni(doctor.getPerson().getDni())){
+            throw new ValidationException("Dni ya existe");
+        }
 
         Person newPerson = new Person(
             doctor.getPerson().getName(), 
@@ -52,8 +62,11 @@ public class DoctorServiceImpl implements DoctorService{
         Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
 
         if(optionalDoctor.isPresent()){
-
             Doctor updateDoctor = optionalDoctor.orElseThrow();
+            
+            if(personRepository.existsByDni(doctor.getPerson().getDni()) && !updateDoctor.getId().equals(id)){
+                throw new ValidationException("Dni ya existe");
+            }
 
             Person updatePerson = new Person();
             updatePerson.setName(doctor.getPerson().getName());
