@@ -46,7 +46,7 @@ public class DoctorController {
     }   
 
     @PostMapping
-    public ResponseEntity<?> saveDoctor(@Valid @RequestBody Doctor doctor, BindingResult result){
+    public ResponseEntity<?> createDoctor(@Valid @RequestBody Doctor doctor, BindingResult result){
         
         try {
             if(result.hasErrors()){
