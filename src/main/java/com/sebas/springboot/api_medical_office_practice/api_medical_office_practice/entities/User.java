@@ -50,12 +50,15 @@ public class User {
         inverseJoinColumns = @JoinColumn(name="role_id"),
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})}
         )
-        private List<Role> roles;
+    private List<Role> roles;
     
     //no se va a guardar en la bd
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean admin;
+
+    public User() {
+    }
 
     //colocar valor antes de que se guarde en bd
     @PrePersist
