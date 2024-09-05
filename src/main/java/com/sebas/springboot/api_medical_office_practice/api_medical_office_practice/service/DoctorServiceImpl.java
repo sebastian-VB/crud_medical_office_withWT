@@ -24,6 +24,9 @@ public class DoctorServiceImpl implements DoctorService{
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Doctor> findAll() {
         return doctorRepository.findAll();
@@ -48,9 +51,10 @@ public class DoctorServiceImpl implements DoctorService{
             doctor.getPerson().getDni(), 
             doctor.getPerson().getPhone()
         );
-        
+
         Doctor newDoctor = new Doctor(doctor.getSpeciality());
         newDoctor.setPerson(newPerson);
+        newDoctor.setUser(userService.save(doctor.getUser()));
 
         return doctorRepository.save(doctor);
     }
