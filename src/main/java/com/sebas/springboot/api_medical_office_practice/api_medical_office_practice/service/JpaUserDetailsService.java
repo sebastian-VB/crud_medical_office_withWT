@@ -10,12 +10,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.entities.User;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.repositories.UserRepository;
 
-
+@Service
 public class JpaUserDetailsService implements UserDetailsService{
 
     @Autowired
