@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.security.filter.JwtAuthenticationFilter;
+import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.security.filter.JwtValidationFilter;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -36,6 +37,7 @@ public class SpringSecurityConfig {
             .requestMatchers("/api/doctor/list").permitAll()
             .anyRequest().authenticated()
         )
+            .addFilter(new JwtValidationFilter(authenticationManager()))
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .csrf(config -> config.disable())
             .sessionManagement(managment -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
