@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import com.sebas.springboot.api_medical_office_practice.api_medical_office_pract
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/patient")
 public class PatientController {
@@ -29,11 +32,13 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Patient> findAll(){
         return patientService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> findById(@PathVariable Long id){
 
         Optional<Patient> optionalPatient = patientService.findById(id);
@@ -46,6 +51,7 @@ public class PatientController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> save(@Valid @RequestBody Patient patient, BindingResult result){
         
         try {
@@ -62,6 +68,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<?> update(@Valid @RequestBody Patient patient, BindingResult result , @PathVariable Long id){
 
         try {

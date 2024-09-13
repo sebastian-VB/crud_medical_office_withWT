@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import com.sebas.springboot.api_medical_office_practice.api_medical_office_pract
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.shared.MethodsForValidation;
 import com.sebas.springboot.api_medical_office_practice.api_medical_office_practice.tdo.RecipeTDO;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeController {
@@ -27,11 +30,13 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Recipe> findAll(){
         return recipeService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> findById(@PathVariable Long id){
 
         Optional<Recipe> optionalRecipe = recipeService.findById(id);
@@ -44,6 +49,7 @@ public class RecipeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> save(@RequestBody RecipeTDO recipeTdo){
 
         try {
@@ -58,6 +64,7 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> update(@RequestBody RecipeTDO recipeTDO, @PathVariable Long id){
 
         try {
