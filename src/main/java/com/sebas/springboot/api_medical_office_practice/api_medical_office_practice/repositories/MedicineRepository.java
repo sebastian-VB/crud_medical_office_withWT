@@ -17,5 +17,9 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long>{
 
     Medicine findByCode(String code);
 
+    Medicine findByName(String name);
+
     boolean existsByCode(String code);
+
+    boolean existsByName(String name);
 }

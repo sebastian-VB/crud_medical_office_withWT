@@ -91,10 +91,10 @@ public class RecipeServiceImpl implements RecipeService{
             recipeEntity.setDateReason(LocalDateTime.now());
 
             for(Medicine med: recipeTdo.getMedicines() ){
-                if(!medicineRepository.existsByCode(med.getCode())){
+                if(!medicineRepository.existsByName(med.getName())){
                     medicineRepository.save(med);
                 }
-                medicinesAux.add(medicineRepository.findByCode(med.getCode()));
+                medicinesAux.add(medicineRepository.findByName(med.getName()));
             }
             
             recipeEntity.setMedicines(medicinesAux);
@@ -104,7 +104,6 @@ public class RecipeServiceImpl implements RecipeService{
         else{
             throw new ValidationException("No se encuentra la persona");
         }
-        // return Optional.empty();
     }
 
 }
